@@ -509,7 +509,7 @@ pub fn base64_atob(input: DOMString) -> Fallible<DOMString> {
         return Err(Error::InvalidCharacter);
     }
 
-    match base64::decode(&input) {
+    match base64::decode_config(&input, base64::STANDARD.forgiving(true)) {
         Ok(data) => Ok(DOMString::from(
             data.iter().map(|&b| b as char).collect::<String>(),
         )),
